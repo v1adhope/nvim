@@ -22,7 +22,12 @@ end
 
 -- Install and enable exactly the servers configured in lsp/servers.lua.
 -- Sorted so the list Mason works through is stable between runs.
-local names = vim.tbl_keys(require("lsp/servers"))
+local ok, servers = pcall(require, "lsp/servers")
+if not ok then
+	return
+end
+
+local names = vim.tbl_keys(servers)
 table.sort(names)
 
 mason_lsp.setup({
