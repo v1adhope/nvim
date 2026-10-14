@@ -9,20 +9,24 @@ if not ok then
 end
 
 local ok, friendly_snippets = pcall(require, "luasnip.loaders.from_vscode")
-if ok then
-	friendly_snippets.lazy_load({ exclude = {} })
+if not ok then
+	return
 end
+
+local ok, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
+if not ok then
+	return
+end
+
+friendly_snippets.lazy_load({ exclude = {} })
+
+-- Insert `()` after select function or method item
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 -- Correct work cmp with luasnip
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
--- Insert `()` after select function or method item
-local ok, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
-if ok then
-	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 end
 
 cmp.setup({
