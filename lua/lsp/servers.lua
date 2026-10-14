@@ -6,11 +6,14 @@
 --
 -- This table is also the installation list: lsp/mason.lua installs and enables
 -- exactly these servers.
+--
+-- Upstream settings docs:
+--   Lua - https://github.com/sumneko/lua-language-server/blob/master/locale/en-us/setting.lua
+--   Go  - https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 
 return {
 	lua_ls = {
 		filetypes = { "lua" },
-		-- See https://github.com/sumneko/lua-language-server/blob/master/locale/en-us/setting.lua
 		settings = {
 			Lua = {
 				runtime = {
@@ -55,7 +58,6 @@ return {
 	},
 	gopls = {
 		filetypes = { "go" },
-		-- See https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 		settings = {
 			gopls = {
 				analyses = {
